@@ -19,6 +19,9 @@
 
     <!-- FireBase  Link -->
     <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-database.js"></script>
+    
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery.js"></script>
@@ -63,10 +66,10 @@
                                 <input class="form-control" id="firstTrain-input" type="time">
                             </div>
                             <div class="form-group row">
-                                <label for="comment-input">Frequency (In Minutes):</label>
-                                <textarea class="form-control" id="comment-input" rows="5"></textarea>
+                                <label for="frequency-input">Frequency (In Minutes):</label>
+                                <input class="form-control" id="frequency-input" type="number">
                             </div>
-                            <button class="btn btn-primary" id="add-user" type="submit">Submit</button>
+                            <button class="btn btn-primary" id="add-train" type="submit">Submit</button>
                         </form>
 
                     </div>
@@ -81,9 +84,9 @@
                     </div>
                     <div class="card-body" id="next-train">
                         <h2 id="name-display"></h2>
-                        <h4 id="email-display"></h4>
-                        <h4 id="age-display"></h4>
-                        <p id="comment-display"></p>
+                        <h4 id="destination-display"></h4>
+                        <h4 id="firstTrain-display"></h4>
+                        <p id="frequency-display"></p>
                     </div>
                 </div>
 

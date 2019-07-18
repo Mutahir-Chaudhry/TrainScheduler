@@ -43,7 +43,7 @@
         <div class="row">
 
             <!-- Sign-Up Card-->
-            <div class="col-lg-6">
+            <div class="col-lg-4">
                 <div class="card">
                     <div class="card-header">
                         New Train Sign-Up
@@ -77,7 +77,20 @@
             </div>
 
             <!-- Most Recent Member Card -->
-            <div class="col-lg-6">
+
+
+            <!-- Wells for displaying all users -->
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header">
+                        All Scheduled Trains
+                    </div>
+                    <div class="card-body text-center">
+                        <div id="all-trains-list"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
                 <div class="card">
                     <div class="card-header">
                         Next Train To Arrive
@@ -85,24 +98,11 @@
                     <div class="card-body" id="next-train">
                         <h2 id="name-display"></h2>
                         <h4 id="destination-display"></h4>
-                        <h4 id="firstTrain-display"></h4>
-                        <p id="frequency-display"></p>
+                        <h4 id="nextTrain-display"></h4>
                     </div>
                 </div>
 
-            </div>
-
-            <!-- Wells for displaying all users -->
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-header">
-                        All Scheduled Trains
-                    </div>
-                    <div class="card-body">
-                        <div id="all-trains-list"></div>
-                    </div>
-                </div>
-            </div>
+            </div>            
         </div>
 
     </div>

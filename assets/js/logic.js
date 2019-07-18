@@ -18,23 +18,21 @@ var name = "";
 var destination = "";
 var firstTrainTime = 0000;
 var frequency = 0;
+var minutes = 0
 // Capture Button Click
 $("#add-train").on("click", function(event) {
   event.preventDefault();
-  // YOUR TASK!!!
-  // Code in the logic for storing and retrieving the most recent user.
-  // Dont forget to provide initial data to your Firebase database.
   name = $("#name-input").val().trim();
   destination = $("#destination-input").val().trim();
   firstTrain = $("#firstTrain-input").val().trim();
   frequency = $("#frequency-input").val().trim();
+
   // Code for the push
   dataRef.ref().push({
     name: name,
     destination: destination,
-    firstTrain: firstTrainTime,
+    firstTrain: firstTrain,
     frequency: frequency,
-    dateAdded: firebase.database.ServerValue.TIMESTAMP
   });
 });
 
@@ -42,27 +40,59 @@ $("#add-train").on("click", function(event) {
     dataRef.ref().on("child_added", function(childSnapshot) {
 
         // Log everything that's coming out of snapshot
-        console.log(childSnapshot.val().name);
-        console.log(childSnapshot.val().destination);
-        console.log(childSnapshot.val().firstTrainTime);
-        console.log(childSnapshot.val().frequency);
-        console.log(childSnapshot.val().joinDate);
+        // console.log(childSnapshot.val().name);
+        // console.log(childSnapshot.val().destination);
+        // console.log(childSnapshot.val().firstTrain);
+        // console.log(childSnapshot.val().frequency);
   
         // full list of items to the well
-        $("#all-trains-list").append("<div class='well'><span class='train-name'> " + childSnapshot.val().name +
-          " </span><span class='train-destination'> " + childSnapshot.val().destination +
-          " </span><span class='train-firstTrain'> " + childSnapshot.val().firstTrainTime +
-          " </span><span class='train-frequency'> " + childSnapshot.val().frequency + " </span></div>");
+        $("#all-trains-list").append("<div class='well'><span class='train-name'> Name: " + childSnapshot.val().name +
+          " </span><span class='train-destination'> Destination: " + childSnapshot.val().destination + " </span></div>");
   
         // Handle the errors
       }, function(errorObject) {
         console.log("Errors handled: " + errorObject.code);
       });
   
-      dataRef.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot) {
+      dataRef.ref().orderByChild("name").on("child_added", function(snapshot) {
         // Change the HTML to reflect
+        console.log((snapshot.val().name));
+        console.log((snapshot.val().destination));
+        console.log((snapshot.val().firstTrain));
+        console.log((snapshot.val().frequency));
+     
+    // Frequency Var
+      var tFrequency = snapshot.val().frequency;
+
+      // Time is 3:30 AM
+      var firstTime = snapshot.val().frequency;
+  
+      // First Time (pushed back 1 year to make sure it comes before current time)
+      var firstTimeConverted = moment(firstTime, "HH:mm").subtract(1, "year");
+      console.log(firstTimeConverted);
+  
+      // Current Time
+      var currentTime = moment();
+      console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
+  
+      // Difference between the times
+      var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+      console.log("DIFFERENCE IN TIME: " + diffTime);
+  
+      // Time apart (remainder)
+      var tRemainder = diffTime % tFrequency;
+      console.log(tRemainder);
+  
+      // Minute Until Train
+      var tMinutesTillTrain = tFrequency - tRemainder;
+      console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
+  
+      // Next Train
+      var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+      console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
+
         $("#name-display").text(snapshot.val().name);
-        $("#destination-display").text(snapshot.val().destination);
-        $("#firstTrain-display").text(snapshot.val().firstTrainTime);
-        $("#frequency-display").text(snapshot.val().frequency);
-      });
+        $("#destination-display").text("DESTINATION: " + snapshot.val().destination);
+        $("#nextTrain-display").text("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
+
+    });
